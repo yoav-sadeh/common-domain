@@ -1,6 +1,6 @@
 
 
-name := "com.hamlazot.domain-modeling"
+name := "common-domain"
 
 version := "1.0"
 
