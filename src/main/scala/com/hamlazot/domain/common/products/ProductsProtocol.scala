@@ -1,8 +1,6 @@
-package com.hamlazot.domain
-package client.products
+package com.hamlazot.domain.common.products
 
-import com.hamlazot.domain.common.products.ProductsAggregate
-import scripts.notifications.NotificationsModel.EntityType
+import com.hamlazot.domain.scripts.notifications.NotificationsModel.EntityType
 
 /**
  * @author yoav @since 10/31/16.

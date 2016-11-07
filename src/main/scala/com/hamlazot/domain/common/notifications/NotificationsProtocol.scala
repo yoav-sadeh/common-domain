@@ -1,6 +1,4 @@
-package com.hamlazot.domain.client.notifications
-
-import com.hamlazot.domain.common.notifications.NotificationsAggregate
+package com.hamlazot.domain.common.notifications
 
 /**
  * @author yoav @since 10/31/16.

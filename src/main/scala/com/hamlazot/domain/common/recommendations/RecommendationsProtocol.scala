@@ -1,11 +1,8 @@
-package com.hamlazot
-package domain
-package client.recommendations
+package com.hamlazot.domain.common.recommendations
 
 import java.util.UUID
 
-import scripts.notifications.NotificationsModel.{Event, EventType, EntityType}
-import com.hamlazot.domain.common.recommendations.RecommendationsAggregate
+import com.hamlazot.domain.scripts.notifications.NotificationsModel.{EntityType, Event, EventType}
 
 /**
  * @author yoav @since 10/31/16.
