@@ -39,11 +39,13 @@ trait ScriptRecommendationsService extends RecommendationsService[ScriptRecommen
     ActorSystem().scheduler.scheduleOnce(FiniteDuration(7, TimeUnit.SECONDS)) {
       val recommendationMsg = s"${request.recommendedEntityType} with id ${request.entityId} was recommended by user" +
         s"${request.userId}, with rating of ${request.rating}"
-      EventBus.queue.put(CRUDEvent(protocol.RecommendationEntityType, recommendation.recommendedEntityId, recommendationMsg, Created))
+      EventBus.queue.put(CRUDEvent(protocol.RecommendationEntityType, recommendation.recommendedEntityId, s"CRUD event: ${protocol.RecommendationEntityType} with id ${recommendation.recommendedEntityId}", Created))
       EventBus.queue.put(protocol.EntityRecommendedEvent(protocol.RecommendationEntityType, recommendation.recommendedEntityId, recommendationMsg))
     }
 
     M1(protocol.RecommendationResponse(recommendation.recommendationId))
   }
 
+
 }
+object ScriptRecommendationsService extends ScriptRecommendationsService

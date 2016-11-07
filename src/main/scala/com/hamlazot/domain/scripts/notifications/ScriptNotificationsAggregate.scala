@@ -41,7 +41,7 @@ object NotificationsModel{
   case object Deleted extends CRUDEventType
   case object Updated extends CRUDEventType
 
-  case object All extends EventType
+  case object AllEventTypes extends EventType
   //    trait BaseEventType extends Enumeration{
   //      type BaseEventType = Value
   //      val CREATED, DELETE, UPDATED, ALL = Value

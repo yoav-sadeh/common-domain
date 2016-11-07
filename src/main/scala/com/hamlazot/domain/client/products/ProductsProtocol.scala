@@ -7,7 +7,9 @@ import scripts.notifications.NotificationsModel.EntityType
 /**
  * @author yoav @since 10/31/16.
  */
-trait ProductsProtocol[A <: ProductsAggregate] {
+
+
+trait ProductsProtocol[A <: ProductsAggregate]{
   val productsAggregate: A
 
   case class DeleteProductRequest(productUser: productsAggregate.ProductUser

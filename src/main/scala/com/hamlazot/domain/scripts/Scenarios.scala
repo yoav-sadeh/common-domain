@@ -5,14 +5,15 @@ package scripts
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-
-import accounts.ScriptAccountService
+import com.hamlazot.domain.scripts.accounts.ScriptAccountService
+import com.hamlazot.domain.scripts.notifications.NotificationsModel.{EntityType, EventType, Created}
 import com.hamlazot.domain.scripts.notifications.{NotificationBus, ScriptNotificationsService}
-import users.ScriptUsersModel.AUser
-import products.ScriptProductsModel.ProductCategory
-import products.ScriptProductsService
-import notifications.NotificationsModel.Created
-import users.ScriptUsersService
+import com.hamlazot.domain.scripts.products.ScriptProductsModel.ProductCategory
+import com.hamlazot.domain.scripts.products.ScriptProductsService
+import com.hamlazot.domain.scripts.recommendations.RecommendationModel.RatingOutOfFive.RatingOutOfFive
+import com.hamlazot.domain.scripts.users.ScriptUsersModel.AUser
+import com.hamlazot.domain.scripts.users.ScriptUsersService
+import com.hamlazot.domain.scripts.recommendations.ScriptRecommendationsService
 
 import scala.concurrent.ExecutionContext
 
@@ -22,8 +23,11 @@ import scala.concurrent.ExecutionContext
 trait Scenarios {
 
   implicit val ctxt: ExecutionContext
-  import ScriptUsersService.protocol._
+
   import ScriptProductsService.protocol._
+  import ScriptUsersService.protocol._
+  import ScriptRecommendationsService.protocol._
+
   //Scenarios:
 
   //1. Create account -> Create User  = User UA
@@ -37,7 +41,7 @@ trait Scenarios {
   def createAccountAndUserWithTrustees(name: String, mail: String, user: AUser) = for {
     userResponse <- createAccountAndUser(name, mail, List(user))
     result <- ScriptUsersService.addTrusters(AddTrustersRequest(user.userId, List(userResponse.user)))
-  } yield userResponse.user
+  } yield userResponse
 
   //3. UB - Create Product = Product PA
   def createProduct(user: AUser, productName: String, productDescription: String, productCategoryName: String) = {
@@ -47,19 +51,17 @@ trait Scenarios {
   }
 
   //4. UB - Create Product Notification on PA
-  def createProductNotification(user: AUser, productId: UUID) = {
+  def createNotification(user: AUser, entityId: UUID, eventType: EventType) = {
 
-    val subscription = ScriptNotificationsService.subscribe(ScriptNotificationsService.protocol.SubscribeRequest(user.userId, productId, Created))
-    val notification = NotificationBus.queue.poll(10, TimeUnit.SECONDS)
-    println(notification)
+    val subscription = ScriptNotificationsService.subscribe(ScriptNotificationsService.protocol.SubscribeRequest(user.userId, entityId, eventType))
+
     subscription
   }
 
-  /*
-
-
-
-  5. UA - Create Recommendation on PA
-   */
+  //5. UA - Create Recommendation on PA
+  def createRecommendation(userId: UUID, entityId: UUID, entityType: EntityType, rating: RatingOutOfFive, description: String) = {
+    val request = RecommendationRequest(userId, entityId, entityType, description, rating)
+    ScriptRecommendationsService.recommend(request)
+  }
 
 }
