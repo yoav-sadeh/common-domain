@@ -5,11 +5,13 @@ package scripts
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
+import akka.actor.ActorSystem
 import com.hamlazot.domain.scripts.accounts.ScriptAccountService
 import com.hamlazot.domain.scripts.notifications.NotificationsModel.{EntityType, EventType, Created}
 import com.hamlazot.domain.scripts.notifications.{NotificationBus, ScriptNotificationsService}
 import com.hamlazot.domain.scripts.products.ScriptProductsModel.ProductCategory
 import com.hamlazot.domain.scripts.products.ScriptProductsService
+import com.hamlazot.domain.scripts.providers.{ScriptProvidersService, ConcreteProviderCategory}
 import com.hamlazot.domain.scripts.recommendations.RecommendationModel.RatingOutOfFive.RatingOutOfFive
 import com.hamlazot.domain.scripts.users.ScriptUsersModel.AUser
 import com.hamlazot.domain.scripts.users.ScriptUsersService
@@ -22,11 +24,11 @@ import scala.concurrent.ExecutionContext
  */
 trait Scenarios {
 
-  implicit val ctxt: ExecutionContext
-
   import ScriptProductsService.protocol._
   import ScriptUsersService.protocol._
   import ScriptRecommendationsService.protocol._
+  val providerService = ScriptProvidersService()
+  import providerService._
 
   //Scenarios:
 
@@ -64,4 +66,15 @@ trait Scenarios {
     ScriptRecommendationsService.recommend(request)
   }
 
+  //6. create user UC
+
+  //7. UC - create provider
+  def createProvider(providerUser: UUID,
+                     providerName: String,
+                     providerCategory: String,
+                     providerDescription: String) = {
+
+    providerService.createProvider(CreateProviderRequest(providerUser, providerName, ConcreteProviderCategory(UUID.randomUUID(), providerCategory), providerDescription))
+  }
+  //8. UC - recommend provider
 }

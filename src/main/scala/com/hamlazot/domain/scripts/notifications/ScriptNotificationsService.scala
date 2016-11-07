@@ -11,6 +11,7 @@ import com.hamlazot.domain.client.notifications.NotificationsProtocol
 import com.hamlazot.domain.common.notifications.NotificationsService
 import com.hamlazot.domain.scripts.notifications.NotificationsModel.{Event, Subscription}
 import com.typesafe.scalalogging.LazyLogging
+import como.scripts.ScriptBoot
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 import scala.concurrent.ExecutionContext.Implicits.global
@@ -53,7 +54,7 @@ trait ScriptNotificationsService extends NotificationsService[ScriptNotification
 
 object ScriptNotificationsService extends ScriptNotificationsService{
   def start: Unit ={
-    ActorSystem().scheduler.schedule(FiniteDuration(0, TimeUnit.SECONDS), FiniteDuration(1, TimeUnit.SECONDS)){
+    getSystem().scheduler.schedule(FiniteDuration(0, TimeUnit.SECONDS), FiniteDuration(1, TimeUnit.SECONDS)){
       val events = new util.ArrayList[Event]
       EventBus.queue.drainTo(events)
       events.asScala.toList.foreach(processEvent)

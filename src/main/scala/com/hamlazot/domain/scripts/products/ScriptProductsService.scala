@@ -11,6 +11,7 @@ import com.hamlazot.domain.common.products.ProductsService
 import com.hamlazot.domain.scripts.notifications.EventBus
 import com.hamlazot.domain.scripts.notifications.NotificationsModel.{CRUDEvent, Created}
 import com.hamlazot.domain.scripts.products.ScriptProductsModel.{Product, ProductCategory}
+import como.scripts.ScriptBoot
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext
@@ -52,7 +53,7 @@ private[scripts] trait ScriptProductsService extends ProductsService[ScriptProdu
   override def createProduct: (protocol.CreateProductRequest) => M1[protocol.CreateProductResponse] = { request =>
     val product = Product(UUID.randomUUID(), request.productName, request.productCategory, request.description)
     products += product
-    ActorSystem().scheduler.scheduleOnce(FiniteDuration(7, TimeUnit.SECONDS)) {
+    getSystem().scheduler.scheduleOnce(FiniteDuration(7, TimeUnit.SECONDS)) {
       EventBus.queue.put(CRUDEvent(protocol.ProductEntityType, product.productId, product.productName, Created))
     }
     M1(protocol.CreateProductResponse(product.productId, request.productName))

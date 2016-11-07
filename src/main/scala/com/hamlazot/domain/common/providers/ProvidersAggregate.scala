@@ -8,8 +8,10 @@ trait ProvidersAggregate {
     val providerId: ProviderId
     val providerName: ProviderName
     val providerCategory: ProviderCategory
+    val stock: Stock
     val description: ProviderDescription
   }
+
   type ProviderId
   type ProviderDescription
   type ProviderName
@@ -22,4 +24,11 @@ trait ProvidersAggregate {
   type ProviderCategoryName
   type ProviderUser
 
+  type Stock = List[Product]
+  type Product <: {
+    val productName: ProductName
+    val productCategory: ProductCategory
+  }
+  type ProductCategory
+  type ProductName
 }

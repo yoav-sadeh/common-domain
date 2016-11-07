@@ -1,5 +1,7 @@
 package com.hamlazot.domain
 
+import akka.actor.ActorSystem
+
 /**
  * @author yoav @since 10/30/16.
  */
@@ -15,6 +17,10 @@ package object scripts {
     }
 
 
+
   }
+  private val system = ActorSystem("scripts")
+
+  def getSystem() = system
 
 }

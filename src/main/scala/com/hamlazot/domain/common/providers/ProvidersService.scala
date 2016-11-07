@@ -13,4 +13,6 @@ trait ProvidersService extends ProvidersProtocol with CommonOperations{
   def updateProvider: Operation[UpdateProviderRequest, UpdateProviderResponse]
 
   def getProvider: Operation[GetProviderRequest, GetProviderResponse]
+
+  def queryStock: Operation[StockQuery, StockResponse]
 }
