@@ -24,9 +24,9 @@ import scala.concurrent.ExecutionContext
  */
 trait Scenarios {
 
-  import ScriptProductsService.protocol._
-  import ScriptUsersService.protocol._
-  import ScriptRecommendationsService.protocol._
+  import ScriptProductsService._
+  import ScriptUsersService._
+  import ScriptRecommendationsService._
   val providerService = ScriptProvidersService()
   import providerService._
 
@@ -55,7 +55,7 @@ trait Scenarios {
   //4. UB - Create Product Notification on PA
   def createNotification(user: AUser, entityId: UUID, eventType: EventType) = {
 
-    val subscription = ScriptNotificationsService.subscribe(ScriptNotificationsService.protocol.SubscribeRequest(user.userId, entityId, eventType))
+    val subscription = ScriptNotificationsService.subscribe(ScriptNotificationsService.SubscribeRequest(user.userId, entityId, eventType))
 
     subscription
   }

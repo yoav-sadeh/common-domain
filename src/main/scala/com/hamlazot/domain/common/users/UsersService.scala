@@ -2,29 +2,26 @@ package com.hamlazot
 package domain
 package common.users
 
-import com.hamlazot.domain.client.users.UsersProtocol
+import com.hamlazot.domain.common.users.UsersProtocol
 
 /**
  * Created by Owner on 9/30/2016.
  */
-private[domain] trait UsersService[A <: UsersAggregate]  extends CommonOperations{
+private[domain] trait UsersService extends UsersProtocol with UsersAggregate with CommonOperations{
 
-  val aggregate: A
-  val protocol: UsersProtocol[A]
+  def createUser: Operation[CreateUserRequest, CreateUserResponse]
 
-  def createUser: Operation[protocol.CreateUserRequest, protocol.CreateUserResponse]
+  def getUser: Operation[GetUserRequest, GetUserResponse]
 
-  def getUser: Operation[protocol.GetUserRequest, protocol.GetUserResponse]
+  def deleteUser: Operation[DeleteUserRequest, DeleteUserResponse]
 
-  def deleteUser: Operation[protocol.DeleteUserRequest, protocol.DeleteUserResponse]
+  def addTrustees: Operation[AddTrusteesRequest, Boolean]
 
-  def addTrustees: Operation[protocol.AddTrusteesRequest, Boolean]
+  def addTrusters: Operation[AddTrustersRequest, Boolean]
 
-  def addTrusters: Operation[protocol.AddTrustersRequest, Boolean]
+  def removeTrustees: Operation[RemoveTrusteesRequest, Boolean]
 
-  def removeTrustees: Operation[protocol.RemoveTrusteesRequest, Boolean]
-
-  def removeTrusters: Operation[protocol.RemoveTrusteesRequest, Boolean]
+  def removeTrusters: Operation[RemoveTrusteesRequest, Boolean]
 
 }
 
@@ -33,7 +30,7 @@ private[domain] trait UsersService[A <: UsersAggregate]  extends CommonOperation
 object UsersServiceDescriptionApp extends App{
   val ru = scala.reflect.runtime.universe
   val m = ru.runtimeMirror(getClass.getClassLoader)
-  val im = ru.typeOf[UsersService[UsersAggregate]]
+  val im = ru.typeOf[UsersService]
   //im.baseClasses(1).asType.info.decls.toList(0)
   //im.baseClasses(1).asType.info.decls.toList(0).asType.typeParams
   im.members.filter(_.info.dealias.resultType.toString.contains("Operation")).foreach(m => println(s"$m ${m.typeSignature}"))
