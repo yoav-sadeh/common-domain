@@ -21,7 +21,7 @@ trait ProductsAggregate {
   type ProductCategoryId
   type ProductCategoryName
   type ProductUser
-
+  //type Manufacturer important detailto be used in an extended MaterialProduct - add it once you add ManufacturersService
 }
 
 
