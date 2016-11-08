@@ -16,7 +16,7 @@ The domain modeling aspect of the project aims to address a few major difficulti
 
 5. All of the above - before I dive into technical level design (module structure, data/communication model choices etc.).
 
-Needless to say, every reiteration deriving from one of the above misunderstandings is waste of time prone so wouldn't it be great if it took little time too? 
+6. Needless to say, every reiteration deriving from one of the above misunderstandings is waste of time prone so wouldn't it be great if it took little time too? 
 
 ##The Goal:
 - Understanding what is required:
@@ -33,8 +33,11 @@ Needless to say, every reiteration deriving from one of the above misunderstandi
 		* which ***value objects***(userName, authenticationToken, productId) make the ***entities***?
 - Composing the service external interface(API):
 	* Per ***behavior***: Request/Response members(did someone say ***value objects***/***entities*** ;) ?)
+
+- Realizing the above in 20(small feature/service) to 60(entire skeleton) minutes
 	
 ##What's a micro service? 
 Micro services are popular as a paradigm for designing distributed systems and rightfully so but challenge us with their very definition(what exactly would suite a micro service). In this project I would like to demonstrate one possible take on this which is:
 
 ***context*** = ***service***
+
