@@ -21,6 +21,8 @@ object ScriptBoot extends App with Scenarios {
 
   ScriptNotificationsService.start
 
+
+
   val prod = for {
     yoav <- createAccountAndUser("Yoav", "Sadeh", Nil)
     maya <- createAccountAndUserWithTrustees("Maya", "Mamluk", yoav.user)
