@@ -7,32 +7,31 @@ import com.hamlazot.domain.scripts.notifications.NotificationsModel.EntityType
  */
 
 
-trait ProductsProtocol[A <: ProductsAggregate]{
-  val productsAggregate: A
+trait ProductsProtocol extends ProductsAggregate{
 
-  case class DeleteProductRequest(productUser: productsAggregate.ProductUser
-                                  , productId: productsAggregate.ProductId)
+  case class DeleteProductRequest(productUser: ProductUser
+                                  , productId: ProductId)
 
   case class DeleteProductResponse()
 
-  case class UpdateProductRequest(productUser: productsAggregate.ProductUser
-                                  , productId: productsAggregate.ProductId
-                                  , productName: Option[productsAggregate.ProductName]
-                                  , productCategory: Option[productsAggregate.ProductCategory]
-                                  , description: Option[productsAggregate.ProductDescription])
+  case class UpdateProductRequest(productUser: ProductUser
+                                  , productId: ProductId
+                                  , productName: Option[ProductName]
+                                  , productCategory: Option[ProductCategory]
+                                  , description: Option[ProductDescription])
 
   case class UpdateProductResponse()
 
-  case class CreateProductRequest(productUser: productsAggregate.ProductUser
-                                  , productName: productsAggregate.ProductName
-                                  , productCategory: productsAggregate.ProductCategory
-                                  , description: productsAggregate.ProductDescription)
+  case class CreateProductRequest(productUser: ProductUser
+                                  , productName: ProductName
+                                  , productCategory: ProductCategory
+                                  , description: ProductDescription)
 
-  case class CreateProductResponse(productId: productsAggregate.ProductId, productName: productsAggregate.ProductName)
+  case class CreateProductResponse(productId: ProductId, productName: ProductName)
 
-  case class GetProductResponse(product: productsAggregate.Product)
+  case class GetProductResponse(product: Product)
 
-  case class GetProductRequest(productId: productsAggregate.ProductId)
+  case class GetProductRequest(productId: ProductId)
 
   case object ProductEntityType extends EntityType
 }

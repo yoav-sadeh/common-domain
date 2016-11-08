@@ -11,7 +11,7 @@ trait ScriptNotificationsAggregate extends NotificationsAggregate{
   override type Subscription = NotificationsModel.Subscription
   override type Notification = String
   override type EventType = NotificationsModel.EventType
-  override type Event = NotificationsModel.CRUDEvent
+  override type Event = NotificationsModel.Event
 
   override type EntityType = NotificationsModel.EntityType
   override type SubscriptionId = UUID

@@ -7,8 +7,7 @@ import com.hamlazot.domain.scripts.notifications.NotificationsModel.{EntityType,
 /**
  * @author yoav @since 10/31/16.
  */
-trait RecommendationsProtocol[A <: RecommendationsAggregate] {
-  val aggregate: A
+trait RecommendationsProtocol extends RecommendationsAggregate {
 
   case object RecommendationEntityType extends EntityType
   case object RecommendedEventType extends EventType
@@ -16,7 +15,7 @@ trait RecommendationsProtocol[A <: RecommendationsAggregate] {
   case class EntityRecommendedEvent(entityType: EntityType, entityId: UUID, entityKnownName: String) extends Event {
     override val eventType: EventType = RecommendedEventType
   }
-  case class RecommendationRequest(userId: aggregate.RecommendingUserId, entityId: aggregate.RecommendedEntityId, recommendedEntityType: aggregate.RecommendedEntityType, description: String, rating: aggregate.Rating)
-  case class RecommendationResponse(recommendationId: aggregate.RecommendationId)
+  case class RecommendationRequest(userId: RecommendingUserId, entityId: RecommendedEntityId, recommendedEntityType: RecommendedEntityType, description: String, rating: Rating)
+  case class RecommendationResponse(recommendationId: RecommendationId)
 }
 

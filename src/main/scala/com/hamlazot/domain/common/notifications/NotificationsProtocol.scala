@@ -3,22 +3,20 @@ package com.hamlazot.domain.common.notifications
 /**
  * @author yoav @since 10/31/16.
  */
-trait NotificationsProtocol {
-
-  val aggregate: NotificationsAggregate
-
+trait NotificationsProtocol extends NotificationsAggregate{
+  
   case class SubscribeRequest(
-                               userId: aggregate.UserId
-                               , entityId: aggregate.EntityId
-                               , eventType: aggregate.EventType
+                               userId: UserId
+                               , entityId: EntityId
+                               , eventType: EventType
                                )
 
   case class SubscribeResponse(
-                                subcriptionId: aggregate.SubscriptionId
+                                subcriptionId: SubscriptionId
                                 )
 
   case class UnsubscribeRequest(
-                                 subcriptionId: aggregate.SubscriptionId
+                                 subcriptionId: SubscriptionId
                                  )
 
   case class UnsubscribeResponse(result: Boolean)

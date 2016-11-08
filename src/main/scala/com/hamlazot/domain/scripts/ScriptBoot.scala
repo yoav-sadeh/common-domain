@@ -26,11 +26,11 @@ object ScriptBoot extends App with Scenarios {
     maya <- createAccountAndUserWithTrustees("Maya", "Mamluk", yoav.user)
     product <- createProduct(maya.user, "Soap", "Well, it's a goddam soap!!!", "hygine")
     _ <- createNotification(maya.user, product.productId, AllEventTypes)
-    productRecommendation <- createRecommendation(maya.user.userId, product.productId, ScriptProductsService.protocol.ProductEntityType, RatingOutOfFive.THREE, "I recommend it!!!")
+    productRecommendation <- createRecommendation(maya.user.userId, product.productId, ScriptProductsService.ProductEntityType, RatingOutOfFive.THREE, "I recommend it!!!")
     _ <- createNotification(yoav.user, product.productId, AllEventTypes)
     ido <- createAccountAndUser("Ido", "Sadeh", List(maya.user, yoav.user))
     provider <- createProvider(ido.user.userId, "Jbabo Sports", "sports", "A terrific sports wear store!!!")
-    _ <- createNotification(ido.user, provider.providerId, ScriptRecommendationsService.protocol.RecommendedEventType)
+    _ <- createNotification(ido.user, provider.providerId, ScriptRecommendationsService.RecommendedEventType)
     providerRecommendation <- createRecommendation(maya.user.userId, provider.providerId, providerService.ProviderEntityType, RatingOutOfFive.TWO, "I recommend it!!!")
   } yield (yoav, maya, product)
 

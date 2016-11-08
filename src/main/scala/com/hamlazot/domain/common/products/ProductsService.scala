@@ -2,21 +2,18 @@ package com.hamlazot
 package domain
 package common.products
 
-import com.hamlazot.domain.client.products.ProductsProtocol
+import com.hamlazot.domain.common.products.ProductsProtocol
 
 /**
  * Created by Owner on 9/30/2016.
  */
-trait ProductsService[A <: ProductsAggregate] extends CommonOperations with CommonTerms {
+trait ProductsService extends ProductsProtocol with ProductsAggregate with CommonOperations with CommonTerms {
+  
+  def createProduct: Operation[CreateProductRequest, CreateProductResponse]
 
-  val productsAggregate: A
-  val protocol: ProductsProtocol[A]
+  def deleteProduct: Operation[DeleteProductRequest, DeleteProductResponse]
 
-  def createProduct: Operation[protocol.CreateProductRequest, protocol.CreateProductResponse]
+  def updateProduct: Operation[UpdateProductRequest, UpdateProductResponse]
 
-  def deleteProduct: Operation[protocol.DeleteProductRequest, protocol.DeleteProductResponse]
-
-  def updateProduct: Operation[protocol.UpdateProductRequest, protocol.UpdateProductResponse]
-
-  def getProduct: Operation[protocol.GetProductRequest, protocol.GetProductResponse]
+  def getProduct: Operation[GetProductRequest, GetProductResponse]
 }

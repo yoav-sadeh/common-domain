@@ -7,8 +7,7 @@ import java.util.UUID
 import java.util.concurrent.{ArrayBlockingQueue, TimeUnit}
 
 import akka.actor.ActorSystem
-import com.hamlazot.domain.client.notifications.NotificationsProtocol
-import com.hamlazot.domain.common.notifications.NotificationsService
+import com.hamlazot.domain.common.notifications.{NotificationsProtocol, NotificationsService}
 import com.hamlazot.domain.scripts.notifications.NotificationsModel.{Event, Subscription}
 import com.typesafe.scalalogging.LazyLogging
 import como.scripts.ScriptBoot
@@ -19,16 +18,16 @@ import scala.concurrent.duration.FiniteDuration
 /**
  * @author yoav @since 10/31/16.
  */
-trait ScriptNotificationsService extends NotificationsService[ScriptNotificationsAggregate] with LazyLogging{
+trait ScriptNotificationsService extends NotificationsService with NotificationsProtocol with ScriptNotificationsAggregate with LazyLogging{
   override type Operation[A, B] = A => M1[B]
 
 
-  override val aggregate: ScriptNotificationsAggregate = ScriptNotificationsAggregate
-  override val protocol = new NotificationsProtocol {
-    override val aggregate = ScriptNotificationsAggregate
-  }
+//  override val aggregate: ScriptNotificationsAggregate = ScriptNotificationsAggregate
+//  override val protocol = new NotificationsProtocol {
+//    override val aggregate = ScriptNotificationsAggregate
+//  }
 
-  private val subscriptions = scala.collection.mutable.MutableList.empty[aggregate.Subscription]
+  private val subscriptions = scala.collection.mutable.MutableList.empty[Subscription]
 
   protected def processEvent: (Event) => M1[Unit] = { event =>
     subscriptions.find(p => p.entityId == event.entityId).fold(logger.info(s"got event: $event but no subscriptions found...")){
@@ -40,14 +39,14 @@ trait ScriptNotificationsService extends NotificationsService[ScriptNotification
   }
 
 
-  override def unsubscribe: (protocol.UnsubscribeRequest) => M1[protocol.UnsubscribeResponse] = { request =>
-    M1(protocol.UnsubscribeResponse(true))
+  override def unsubscribe: (UnsubscribeRequest) => M1[UnsubscribeResponse] = { request =>
+    M1(UnsubscribeResponse(true))
   }
 
-  override def subscribe: (protocol.SubscribeRequest) => M1[protocol.SubscribeResponse] = { request =>
+  override def subscribe: (SubscribeRequest) => M1[SubscribeResponse] = { request =>
     val subscription = Subscription(UUID.randomUUID(), request.userId, request.entityId, request.eventType)
     subscriptions += subscription
-    M1(protocol.SubscribeResponse(subscription.subscriptionId))
+    M1(SubscribeResponse(subscription.subscriptionId))
   }
 
 }

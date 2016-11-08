@@ -6,8 +6,7 @@ import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
-import com.hamlazot.domain.client.products.ProductsProtocol
-import com.hamlazot.domain.common.products.ProductsService
+import com.hamlazot.domain.common.products.{ProductsProtocol, ProductsService}
 import com.hamlazot.domain.scripts.notifications.EventBus
 import com.hamlazot.domain.scripts.notifications.NotificationsModel.{CRUDEvent, Created}
 import com.hamlazot.domain.scripts.products.ScriptProductsModel.{Product, ProductCategory}
@@ -20,43 +19,34 @@ import scala.concurrent.duration.FiniteDuration
 /**
  * @author yoav @since 10/31/16.
  */
-private[scripts] trait ScriptProductsService extends ProductsService[ScriptProductsAggregate] {
+private[scripts] trait ScriptProductsService extends ProductsService with ProductsProtocol with ScriptProductsAggregate {
   private var products = mutable.MutableList.empty[Product]
   implicit val ctxt: ExecutionContext
 
-
   override type Operation[A, B] = A => M1[B]
 
-  object ScriptProductsProtocol extends ProductsProtocol[ScriptProductsAggregate] {
-    override val productsAggregate: ScriptProductsAggregate = ScriptProductsAggregate
-  }
-
-  override val productsAggregate: ScriptProductsAggregate = ScriptProductsAggregate
-  override val protocol: ProductsProtocol[ScriptProductsAggregate] = ScriptProductsProtocol
-
-
-  override def getProduct: (protocol.GetProductRequest) => M1[protocol.GetProductResponse] = { request =>
+  override def getProduct: (GetProductRequest) => M1[GetProductResponse] = { request =>
     products.find(p => p.productId == request.productId) match {
-      case Some(product) => M1(protocol.GetProductResponse(product))
-      case None => M1(protocol.GetProductResponse(Product(request.productId, "Dummy", ProductCategory(UUID.randomUUID(), "DummyCategory"), "DummyDescription")))
+      case Some(product) => M1(GetProductResponse(product))
+      case None => M1(GetProductResponse(Product(request.productId, "Dummy", ProductCategory(UUID.randomUUID(), "DummyCategory"), "DummyDescription")))
     }
   }
 
-  override def updateProduct: (protocol.UpdateProductRequest) => M1[protocol.UpdateProductResponse] = { request =>
-    M1(protocol.UpdateProductResponse())
+  override def updateProduct: (UpdateProductRequest) => M1[UpdateProductResponse] = { request =>
+    M1(UpdateProductResponse())
   }
 
-  override def deleteProduct: (protocol.DeleteProductRequest) => M1[protocol.DeleteProductResponse] = { request =>
-    M1(protocol.DeleteProductResponse())
+  override def deleteProduct: (DeleteProductRequest) => M1[DeleteProductResponse] = { request =>
+    M1(DeleteProductResponse())
   }
 
-  override def createProduct: (protocol.CreateProductRequest) => M1[protocol.CreateProductResponse] = { request =>
+  override def createProduct: (CreateProductRequest) => M1[CreateProductResponse] = { request =>
     val product = Product(UUID.randomUUID(), request.productName, request.productCategory, request.description)
     products += product
     getSystem().scheduler.scheduleOnce(FiniteDuration(7, TimeUnit.SECONDS)) {
-      EventBus.queue.put(CRUDEvent(protocol.ProductEntityType, product.productId, product.productName, Created))
+      EventBus.queue.put(CRUDEvent(ProductEntityType, product.productId, product.productName, Created))
     }
-    M1(protocol.CreateProductResponse(product.productId, request.productName))
+    M1(CreateProductResponse(product.productId, request.productName))
   }
 }
 
