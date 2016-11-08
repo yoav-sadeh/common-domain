@@ -38,4 +38,3 @@ Needless to say, every reiteration deriving from one of the above misunderstandi
 Micro services are popular as a paradigm for designing distributed systems and rightfully so but challenge us with their very definition(what exactly would suite a micro service). In this project I would like to demonstrate one possible take on this which is:
 
 ***context*** = ***service***
-
