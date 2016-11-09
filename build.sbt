@@ -1,7 +1,6 @@
+name := "common-domain"
 
 organization := "com.hamlazot"
-
-name := "common-domain"
 
 version := "SNAPSHOT-0.1.0"
 
