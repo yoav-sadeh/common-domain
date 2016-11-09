@@ -1,8 +1,9 @@
 
+organization := "com.hamlazot"
 
 name := "common-domain"
 
-version := "1.0"
+version := "SNAPSHOT-0.1.0"
 
 scalaVersion := "2.11.8"
 

@@ -13,11 +13,6 @@ import scala.collection.mutable
  */
 object ScriptUsersService extends UsersService with UsersProtocol with ScriptUsersAggregate {
 
-//  object ScriptUsersProtocol extends UsersProtocol with ScriptUsersAggregate] {
-//    override val aggregate: ScriptUsersAggregate = ScriptUsersAggregate
-//  }
-//  override val protocol: UsersProtocol[ScriptUsersAggregate] = ScriptUsersProtocol
-//  override val aggregate: ScriptUsersAggregate = ScriptUsersAggregate
   override type Operation[A, B] = A => M1[B]
 
   private var users = mutable.MutableList.empty[User]
@@ -39,7 +34,7 @@ object ScriptUsersService extends UsersService with UsersProtocol with ScriptUse
     M1(DeleteUserResponse(before > users.size))
   }
 
-  override def addTrustees: (AddTrusteesRequest) => M1[Boolean] = {request =>
+  override def addTrustees: (AddTrusteesRequest) => M1[AddTrusteesResponse] = {request =>
     var transformed = false
     users.transform { u =>
     if (u.userId == request.userId) {
@@ -50,10 +45,10 @@ object ScriptUsersService extends UsersService with UsersProtocol with ScriptUse
       u
     }
   }
-    M1(true)
+    M1(AddTrusteesResponse(true))
   }
 
-  override def addTrusters: (AddTrustersRequest) => M1[Boolean] = {request =>
+  override def addTrusters: (AddTrustersRequest) => M1[AddTrustersResponse] = {request =>
     var transformed = false
     users.transform { u =>
       if (u.userId == request.userId) {
@@ -64,10 +59,10 @@ object ScriptUsersService extends UsersService with UsersProtocol with ScriptUse
         u
       }
     }
-    M1(transformed)
+    M1(AddTrustersResponse(transformed))
   }
 
-  override def removeTrustees: (RemoveTrusteesRequest) => M1[Boolean] = ???
+  override def removeTrustees: (RemoveTrusteesRequest) => M1[RemoveTrusteesResponse] = ???
 
-  override def removeTrusters: (RemoveTrusteesRequest) => M1[Boolean] = ???
+  override def removeTrusters: (RemoveTrustersRequest) => M1[RemoveTrustersResponse] = ???
 }

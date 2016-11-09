@@ -43,7 +43,7 @@ object ScriptBoot extends App with Scenarios {
 
 }
 
-
-
-
-
+//TODO: move written scenarios to boot, make sure scenario method reflect scenarios
+//TODO: try to segregate domains by packge name to make it difficult to use involuntarily
+//TODO: complete README with details abouts constyructing the scripts and running them.
+//TODO: ServiceProtocols don't cover clients' bizarre demands which DTOs which are DETACHED from the service do!!!

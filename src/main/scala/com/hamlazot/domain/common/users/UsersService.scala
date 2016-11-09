@@ -7,7 +7,7 @@ import com.hamlazot.domain.common.users.UsersProtocol
 /**
  * Created by Owner on 9/30/2016.
  */
-private[domain] trait UsersService extends UsersProtocol with UsersAggregate with CommonOperations{
+trait UsersService extends UsersProtocol with UsersAggregate with CommonOperations{
 
   def createUser: Operation[CreateUserRequest, CreateUserResponse]
 
@@ -15,14 +15,15 @@ private[domain] trait UsersService extends UsersProtocol with UsersAggregate wit
 
   def deleteUser: Operation[DeleteUserRequest, DeleteUserResponse]
 
-  def addTrustees: Operation[AddTrusteesRequest, Boolean]
+  def addTrustees: Operation[AddTrusteesRequest, AddTrusteesResponse]
 
-  def addTrusters: Operation[AddTrustersRequest, Boolean]
+  def addTrusters: Operation[AddTrustersRequest, AddTrustersResponse]
 
-  def removeTrustees: Operation[RemoveTrusteesRequest, Boolean]
+  def removeTrustees: Operation[RemoveTrusteesRequest, RemoveTrusteesResponse]
 
-  def removeTrusters: Operation[RemoveTrusteesRequest, Boolean]
-
+  def removeTrusters: Operation[RemoveTrustersRequest, RemoveTrustersResponse]
+//AddTrusteesResponse
+  //AddTrustersResponse
 }
 
 

@@ -8,9 +8,4 @@ trait UsersAggregate {
   type UserId
   type Trusters
   type Trustees
-  type AddTrusteesRequest
-  type AddTrustersRequest
-  type RemoveTrusteesRequest
-  type RemoveTrustersRequest
-
 }
