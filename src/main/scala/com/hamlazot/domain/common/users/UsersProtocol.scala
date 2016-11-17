@@ -20,4 +20,5 @@ trait UsersProtocol extends UsersAggregate {
   case class RemoveTrustersRequest(userId: UserId, trusters: Trusters)
   case class RemoveTrustersResponse(success: Boolean)
 
+  case class UserDoesNotExistException(user: User) extends Exception(s"user $user does not exist")
 }

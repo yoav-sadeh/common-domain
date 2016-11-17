@@ -3,21 +3,20 @@ package domain.tests.scripts
 
 
 import java.util.UUID
-import java.util.concurrent.TimeUnit
 
-import akka.actor.ActorSystem
+import com.hamlazot.domain.tests.scripts.accounts.ScriptAccountService
+
 //import com.hamlazot.domain.tests.scripts.accounts.ScriptAccountService
-import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{EntityType, EventType, Created}
-import com.hamlazot.domain.tests.scripts.notifications.{NotificationBus, ScriptNotificationsService}
+
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{EntityType, EventType}
+import com.hamlazot.domain.tests.scripts.notifications.ScriptNotificationsService
 import com.hamlazot.domain.tests.scripts.products.ScriptProductsModel.ProductCategory
 import com.hamlazot.domain.tests.scripts.products.ScriptProductsService
-import com.hamlazot.domain.tests.scripts.providers.{ScriptProvidersService, ConcreteProviderCategory}
+import com.hamlazot.domain.tests.scripts.providers.{ConcreteProviderCategory, ScriptProvidersService}
 import com.hamlazot.domain.tests.scripts.recommendations.RecommendationModel.RatingOutOfFive.RatingOutOfFive
+import com.hamlazot.domain.tests.scripts.recommendations.ScriptRecommendationsService
 import com.hamlazot.domain.tests.scripts.users.ScriptUsersModel.AUser
 import com.hamlazot.domain.tests.scripts.users.ScriptUsersService
-import com.hamlazot.domain.tests.scripts.recommendations.ScriptRecommendationsService
-
-import scala.concurrent.ExecutionContext
 
 /**
  * @author yoav @since 10/31/16.
@@ -25,16 +24,19 @@ import scala.concurrent.ExecutionContext
 trait Scenarios {
 
   import ScriptProductsService._
-  import ScriptUsersService._
   import ScriptRecommendationsService._
+  import ScriptUsersService._
+
   val providerService = ScriptProvidersService()
+
+  import ScriptAccountService._
   import providerService._
 
   //Scenarios:
 
   //1. Create account -> Create User  = User UA
   def createAccountAndUser(name: String, mail: String, trustees: List[AUser]) = for {
-    //account <- ScriptAccountService.signUp(name, mail)
+    account <- ScriptAccountService.signUp(SignUpRequest(name, mail))
     userIdResponse <- ScriptUsersService.createUser(CreateUserRequest(name, trustees))
     user <- ScriptUsersService.getUser(GetUserRequest(userIdResponse.userId))
   } yield user
@@ -76,5 +78,6 @@ trait Scenarios {
 
     providerService.createProvider(CreateProviderRequest(providerUser, providerName, ConcreteProviderCategory(UUID.randomUUID(), providerCategory), providerDescription))
   }
+
   //8. UC - recommend provider
 }

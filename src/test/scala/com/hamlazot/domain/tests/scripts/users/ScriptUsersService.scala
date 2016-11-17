@@ -19,6 +19,11 @@ object ScriptUsersService extends UsersService with UsersProtocol with ScriptUse
   private var users = mutable.MutableList.empty[User]
 
   override def createUser: (CreateUserRequest) => M1[CreateUserResponse] = {request =>
+    request.trustees.foreach{user =>
+      if(users.contains(user) == false)
+        throw UserDoesNotExistException(user)
+    }
+
     val id = UUID.randomUUID()
     users += AUser(id, request.name, request.trustees)
     M1(CreateUserResponse(id))
@@ -36,6 +41,8 @@ object ScriptUsersService extends UsersService with UsersProtocol with ScriptUse
   }
 
   override def addTrustees: (AddTrusteesRequest) => M1[AddTrusteesResponse] = {request =>
+    if(users.contains(request.trustees) == false)
+      M1(AddTrusteesResponse(false))
     var transformed = false
     users.transform { u =>
     if (u.userId == request.userId) {
@@ -46,6 +53,7 @@ object ScriptUsersService extends UsersService with UsersProtocol with ScriptUse
       u
     }
   }
+
     M1(AddTrusteesResponse(true))
   }
 

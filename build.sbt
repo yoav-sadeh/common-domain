@@ -17,7 +17,8 @@ libraryDependencies ++= Seq(
   "org.atnos" %% "eff-scalaz" % "2.0.0-RC7" exclude("org.scalaz", "scalaz-core"),
   "com.chuusai" %% "shapeless" % "2.3.2",
   "com.typesafe.akka" %% "akka-testkit" % akka % Test,
-  "org.specs2" %% "specs2-core" % "3.8.6" % Test
+  "org.specs2" %% "specs2-core" % "3.8.6" % Test,
+  "org.specs2" %% "specs2-mock" % "3.8.6" % Test
 )
 
 autoCompilerPlugins := true
