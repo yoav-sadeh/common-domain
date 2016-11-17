@@ -1,16 +1,15 @@
-package com.hamlazot.domain
-package scripts
+package com.hamlazot
+package domain
+package tests.scripts
 package products
 
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
-import akka.actor.ActorSystem
 import com.hamlazot.domain.common.products.{ProductsProtocol, ProductsService}
-import com.hamlazot.domain.scripts.notifications.EventBus
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.{CRUDEvent, Created}
-import com.hamlazot.domain.scripts.products.ScriptProductsModel.{Product, ProductCategory}
-import como.scripts.ScriptBoot
+import com.hamlazot.domain.tests.scripts.notifications.EventBus
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{CRUDEvent, Created}
+import com.hamlazot.domain.tests.scripts.products.ScriptProductsModel.{Product, ProductCategory, ProductEntityType}
 
 import scala.collection.mutable
 import scala.concurrent.ExecutionContext

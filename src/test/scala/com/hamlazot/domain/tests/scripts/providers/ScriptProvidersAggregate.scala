@@ -1,8 +1,9 @@
-package com.hamlazot.domain.scripts.providers
+package com.hamlazot.domain.tests.scripts.providers
 
 import java.util.UUID
 
 import com.hamlazot.domain.common.providers.ProvidersAggregate
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.EntityType
 
 /**
  * @author yoav @since 11/7/16.
@@ -31,3 +32,5 @@ case class ConcreteProvider(providerId: UUID,
 case class ConcreteProviderCategory(providerCategoryId: UUID, providerCategoryName: String)
 
 case class ConcreteProduct(productName: String, productCategory: String)
+
+case object ProviderEntityType extends EntityType

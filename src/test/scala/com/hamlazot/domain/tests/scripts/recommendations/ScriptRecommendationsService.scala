@@ -1,4 +1,5 @@
-package com.hamlazot.domain.scripts
+package com.hamlazot
+package domain.tests.scripts
 
 package recommendations
 
@@ -7,9 +8,9 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import com.hamlazot.domain.common.recommendations.{RecommendationsProtocol, RecommendationsService}
-import com.hamlazot.domain.scripts.notifications.EventBus
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.{Created, CRUDEvent}
-import com.hamlazot.domain.scripts.recommendations.RecommendationModel.Recommendation
+import com.hamlazot.domain.tests.scripts.notifications.EventBus
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{Created, CRUDEvent}
+import com.hamlazot.domain.tests.scripts.recommendations.RecommendationModel.Recommendation
 
 import scala.collection.mutable
 import scala.concurrent.duration.FiniteDuration

@@ -1,7 +1,5 @@
 package com.hamlazot.domain.common.providers
 
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.EntityType
-
 /**
  * @author yoav @since 11/7/16.
  */
@@ -34,7 +32,5 @@ trait ProvidersProtocol extends ProvidersAggregate {
   case class StockQuery(providerId: ProviderId, productName: ProductName, category: ProductCategory)
 
   case class StockResponse(product: Option[Product])
-
-  case object ProviderEntityType extends EntityType
 
 }

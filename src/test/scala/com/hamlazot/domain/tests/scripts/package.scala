@@ -1,4 +1,4 @@
-package com.hamlazot.domain
+package com.hamlazot.domain.tests
 
 import akka.actor.ActorSystem
 

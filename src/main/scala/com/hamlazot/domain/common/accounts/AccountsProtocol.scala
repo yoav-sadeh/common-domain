@@ -3,15 +3,13 @@ package com.hamlazot.domain.common.accounts
 /**
  * @author yoav @since 11/4/16.
  */
-trait AccountsProtocol[A <: AccountsAggregate] {
-
-  val aggregate: AccountsAggregate
+trait AccountsProtocol extends AccountsAggregate {
   
-  case class SignUpRequest()
-  case class SignInRequest()
-  case class SignOutRequest(userId: aggregate.AccountId)
-  case class UpdateMailRequest()
-  case class GetAccountRequest()
+  case class SignUpRequest(name: String, mail: String)
+  case class SignInRequest(token: AuthenticationToken)
+  case class SignOutRequest(userId: AccountId)
+  case class UpdateMailRequest(accountId: AccountId, mail: String)
+  case class GetAccountRequest(accountId: AccountId)
 
   case class SignUpResponse()
   case class SignInResponse()

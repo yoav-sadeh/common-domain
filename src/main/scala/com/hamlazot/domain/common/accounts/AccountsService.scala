@@ -7,18 +7,15 @@ import scala.util.Try
 /**
  * @author yoav @since 6/21/16.
  */
-trait AccountsService[A <: AccountsAggregate] extends CommonOperations with CommonTerms {
+trait AccountsService extends AccountsProtocol with AccountsAggregate with CommonOperations {
+  
+  def signUp: Operation[SignUpRequest, Account]
 
-  val aggregate: A
-  val protocol: AccountsProtocol[A]
+  def signIn: Operation[SignInRequest, Try[AuthenticationToken]]
 
-  def signUp: Operation[aggregate.SignUpRequest, aggregate.Account]
+  def signOut: Operation[SignOutRequest, SignOutResponse]
 
-  def signIn: Operation[aggregate.SignInRequest, Try[AuthenticationToken]]
+  def changeMailAddress: Operation[UpdateMailRequest, Account]
 
-  def signOut: Operation[protocol.SignOutRequest, protocol.SignOutResponse]
-
-  def changeMailAddress: Operation[aggregate.UpdateMailRequest, aggregate.Account]
-
-  def getAccount: Operation[aggregate.GetAccountRequest, aggregate.Account]
+  def getAccount: Operation[GetAccountRequest, Account]
 }

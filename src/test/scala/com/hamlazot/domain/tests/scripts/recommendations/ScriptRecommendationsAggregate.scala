@@ -1,9 +1,9 @@
-package com.hamlazot.domain.scripts.recommendations
+package com.hamlazot.domain.tests.scripts.recommendations
 
 import java.util.UUID
 
 import com.hamlazot.domain.common.recommendations.RecommendationsAggregate
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.EntityType
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{Event, EventType, EntityType}
 
 /**
  * @author yoav @since 10/31/16.
@@ -27,6 +27,13 @@ object RecommendationModel {
     val ONE, TWO, THREE, FOUR, FIVE = Value
   }
 
+}
+
+case object RecommendationEntityType extends EntityType
+case object RecommendedEventType extends EventType
+
+case class EntityRecommendedEvent(entityType: EntityType, entityId: UUID, entityKnownName: String) extends Event {
+  override val eventType: EventType = RecommendedEventType
 }
 
 object ScriptRecommendationsAggregate extends ScriptRecommendationsAggregate

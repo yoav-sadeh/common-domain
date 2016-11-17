@@ -1,10 +1,11 @@
-package com.hamlazot.domain.scripts.users
+package com.hamlazot
+package domain.tests.scripts.users
 
 import java.util.UUID
 import com.hamlazot.domain.common.users.{UsersProtocol, UsersService}
-import com.hamlazot.domain.scripts.M1
-import com.hamlazot.domain.scripts.users.ScriptUsersAggregate
-import com.hamlazot.domain.scripts.users.ScriptUsersModel.AUser
+import com.hamlazot.domain.tests.scripts.M1
+import com.hamlazot.domain.tests.scripts.users.ScriptUsersAggregate
+import com.hamlazot.domain.tests.scripts.users.ScriptUsersModel.AUser
 
 import scala.collection.mutable
 

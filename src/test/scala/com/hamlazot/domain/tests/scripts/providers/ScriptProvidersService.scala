@@ -1,6 +1,5 @@
 package com.hamlazot
-package domain
-package scripts
+package domain.tests.scripts
 package providers
 
 import java.util.UUID
@@ -8,11 +7,10 @@ import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
 import com.hamlazot.domain.common.providers.{ProvidersProtocol, ProvidersService}
-import com.hamlazot.domain.scripts.notifications.EventBus
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.{CRUDEvent, Created}
+import com.hamlazot.domain.tests.scripts.notifications.EventBus
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{Created, CRUDEvent}
 
 import scala.collection.mutable
-import scala.concurrent.ExecutionContext
 import scala.concurrent.duration.FiniteDuration
 
 /**
@@ -23,6 +21,7 @@ trait ScriptProvidersService extends ProvidersService with ProvidersProtocol wit
   private var providers = mutable.MutableList.empty[ConcreteProvider]
 
   val system: ActorSystem = getSystem()
+
   import system.dispatcher
 
   override type Operation[A, B] = A => M1[B]

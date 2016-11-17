@@ -1,4 +1,4 @@
-package com.hamlazot.domain.scripts.notifications
+package com.hamlazot.domain.tests.scripts.notifications
 
 import java.util.UUID
 
@@ -42,17 +42,9 @@ object NotificationsModel{
   case object Updated extends CRUDEventType
 
   case object AllEventTypes extends EventType
-  //    trait BaseEventType extends Enumeration{
-  //      type BaseEventType = Value
-  //      val CREATED, DELETE, UPDATED, ALL = Value
-  //    }
+
 
   trait EntityType
-
-//  object EntityType extends Enumeration{
-//    type EntityType = Value
-//    val USER, PRODUCT, RECOMMENDATION = Value
-//  }
 
 }
 

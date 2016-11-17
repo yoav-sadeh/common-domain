@@ -1,21 +1,21 @@
 package com.hamlazot
-package domain
-package scripts
+package domain.tests.scripts
+
 
 import java.util.UUID
 import java.util.concurrent.TimeUnit
 
 import akka.actor.ActorSystem
-import com.hamlazot.domain.scripts.accounts.ScriptAccountService
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.{EntityType, EventType, Created}
-import com.hamlazot.domain.scripts.notifications.{NotificationBus, ScriptNotificationsService}
-import com.hamlazot.domain.scripts.products.ScriptProductsModel.ProductCategory
-import com.hamlazot.domain.scripts.products.ScriptProductsService
-import com.hamlazot.domain.scripts.providers.{ScriptProvidersService, ConcreteProviderCategory}
-import com.hamlazot.domain.scripts.recommendations.RecommendationModel.RatingOutOfFive.RatingOutOfFive
-import com.hamlazot.domain.scripts.users.ScriptUsersModel.AUser
-import com.hamlazot.domain.scripts.users.ScriptUsersService
-import com.hamlazot.domain.scripts.recommendations.ScriptRecommendationsService
+//import com.hamlazot.domain.tests.scripts.accounts.ScriptAccountService
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.{EntityType, EventType, Created}
+import com.hamlazot.domain.tests.scripts.notifications.{NotificationBus, ScriptNotificationsService}
+import com.hamlazot.domain.tests.scripts.products.ScriptProductsModel.ProductCategory
+import com.hamlazot.domain.tests.scripts.products.ScriptProductsService
+import com.hamlazot.domain.tests.scripts.providers.{ScriptProvidersService, ConcreteProviderCategory}
+import com.hamlazot.domain.tests.scripts.recommendations.RecommendationModel.RatingOutOfFive.RatingOutOfFive
+import com.hamlazot.domain.tests.scripts.users.ScriptUsersModel.AUser
+import com.hamlazot.domain.tests.scripts.users.ScriptUsersService
+import com.hamlazot.domain.tests.scripts.recommendations.ScriptRecommendationsService
 
 import scala.concurrent.ExecutionContext
 
@@ -34,8 +34,8 @@ trait Scenarios {
 
   //1. Create account -> Create User  = User UA
   def createAccountAndUser(name: String, mail: String, trustees: List[AUser]) = for {
-    account <- ScriptAccountService.signUp(name, mail)
-    userIdResponse <- ScriptUsersService.createUser(CreateUserRequest(account.name, trustees))
+    //account <- ScriptAccountService.signUp(name, mail)
+    userIdResponse <- ScriptUsersService.createUser(CreateUserRequest(name, trustees))
     user <- ScriptUsersService.getUser(GetUserRequest(userIdResponse.userId))
   } yield user
 

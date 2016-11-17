@@ -1,7 +1,5 @@
 package com.hamlazot.domain.common.products
 
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.EntityType
-
 /**
  * @author yoav @since 10/31/16.
  */
@@ -33,5 +31,5 @@ trait ProductsProtocol extends ProductsAggregate{
 
   case class GetProductRequest(productId: ProductId)
 
-  case object ProductEntityType extends EntityType
+
 }

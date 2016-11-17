@@ -1,4 +1,4 @@
-package com.hamlazot.domain.scripts.users
+package com.hamlazot.domain.tests.scripts.users
 
 import java.util.UUID
 

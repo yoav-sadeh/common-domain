@@ -1,14 +1,18 @@
-package como.scripts
+package com.hamlazot.domain.tests.scripts
 
 
 import java.util
 
-import com.hamlazot.domain.scripts.Scenarios
-import com.hamlazot.domain.scripts.notifications.NotificationsModel.AllEventTypes
-import com.hamlazot.domain.scripts.notifications.{NotificationBus, ScriptNotificationsService}
-import com.hamlazot.domain.scripts.products.ScriptProductsService
-import com.hamlazot.domain.scripts.recommendations.RecommendationModel.RatingOutOfFive
-import com.hamlazot.domain.scripts.recommendations.ScriptRecommendationsService
+import com.hamlazot.domain.tests.scripts.Scenarios
+import com.hamlazot.domain.tests.scripts.notifications.ScriptNotificationsService
+import com.hamlazot.domain.tests.scripts.Scenarios
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.AllEventTypes
+import com.hamlazot.domain.tests.scripts.notifications.{NotificationBus, ScriptNotificationsService}
+import com.hamlazot.domain.tests.scripts.products.ScriptProductsModel.ProductEntityType
+import com.hamlazot.domain.tests.scripts.products.ScriptProductsService
+import com.hamlazot.domain.tests.scripts.providers.ProviderEntityType
+import com.hamlazot.domain.tests.scripts.recommendations.RecommendationModel.RatingOutOfFive
+import com.hamlazot.domain.tests.scripts.recommendations.{RecommendedEventType, ScriptRecommendationsService}
 
 import scala.collection.JavaConverters.asScalaBufferConverter
 
@@ -27,12 +31,12 @@ object ScriptBoot extends App with Scenarios {
     maya <- createAccountAndUserWithTrustees("Maya", "Mamluk", yoav.user)
     product <- createProduct(maya.user, "Soap", "Well, it's a goddam soap!!!", "hygine")
     _ <- createNotification(maya.user, product.productId, AllEventTypes)
-    productRecommendation <- createRecommendation(maya.user.userId, product.productId, ScriptProductsService.ProductEntityType, RatingOutOfFive.THREE, "I recommend it!!!")
+    productRecommendation <- createRecommendation(maya.user.userId, product.productId, ProductEntityType, RatingOutOfFive.THREE, "I recommend it!!!")
     _ <- createNotification(yoav.user, product.productId, AllEventTypes)
     ido <- createAccountAndUser("Ido", "Sadeh", List(maya.user, yoav.user))
     provider <- createProvider(ido.user.userId, "Jbabo Sports", "sports", "A terrific sports wear store!!!")
-    _ <- createNotification(ido.user, provider.providerId, ScriptRecommendationsService.RecommendedEventType)
-    providerRecommendation <- createRecommendation(maya.user.userId, provider.providerId, providerService.ProviderEntityType, RatingOutOfFive.TWO, "I recommend it!!!")
+    _ <- createNotification(ido.user, provider.providerId, RecommendedEventType)
+    providerRecommendation <- createRecommendation(maya.user.userId, provider.providerId, ProviderEntityType, RatingOutOfFive.TWO, "I recommend it!!!")
   } yield (yoav, maya, product)
 
   println(prod)

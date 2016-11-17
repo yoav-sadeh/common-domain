@@ -1,8 +1,9 @@
-package com.hamlazot.domain.scripts.products
+package com.hamlazot.domain.tests.scripts.products
 
 import java.util.UUID
 
 import com.hamlazot.domain.common.products.ProductsAggregate
+import com.hamlazot.domain.tests.scripts.notifications.NotificationsModel.EntityType
 
 /**
  * @author yoav @since 10/31/16.
@@ -34,4 +35,5 @@ object ScriptProductsModel {
                      productCategory: ProductCategory,
                      description: String)
 
+  case object ProductEntityType extends EntityType
 }
